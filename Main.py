@@ -31,20 +31,22 @@ class Client1:
             print(reply2serialized)
 
 class Client2:
-    host = ''
-    port = 5555
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    def listen(self):
+        host = ''
+        port = 5555
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    try:
-        s.bind((host, port))
-    except socket.error as e:
-        print(str(e))
-    s.listen(5)
-    conn, addr = s.accept()
-    print('connected to: '+ addr[0]+':'+str(addr[1]))
+        try:
+            s.bind((host, port))
+        except socket.error as e:
+            print(str(e))
+        s.listen(5)
+        conn, addr = s.accept()
+        print('connected to: '+ addr[0]+':'+str(addr[1]))
 
 c1 = Client1()
 c2 = Client2()
+
 
 def Main():
     clientprompt = input("Which client do you want to use? Please only use 1 or 2.    :")
@@ -54,6 +56,7 @@ def Main():
         c1.connect(clientid)
     elif clientprompt == "2":
         clientid = 2
+        c2.listen()
     else:
         print("Wrong client ID. Please try again.")
         Main()
