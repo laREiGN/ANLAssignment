@@ -5,7 +5,7 @@ import json
 ServerIP = "145.24.222.103"
 Port = 8001
 
-class Main():
+class Clien1():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((ServerIP, Port))
     msgraw = s.recv(1024)
@@ -26,5 +26,16 @@ class Main():
         reply2serialized = json.loads(reply2)
         print(reply2serialized)
 
+class client2():
+    host = ''
+    port = 5555
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+    try:
+        s.bind((host, port))
+    except socket.error as e:
+        print(str(e))
+    s.listen(5)
+    conn, addr = s.accept()
+    print('connected to: '+ addr[0]+':'+str(addr[1]))
 
