@@ -30,10 +30,7 @@ class Client1:
             reply2serialized = json.loads(reply2)
             print(reply2serialized)
 
-c1 = Client1()
-c2 = Client1()
-
-class client2():
+class Client2:
     host = ''
     port = 5555
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -46,6 +43,9 @@ class client2():
     conn, addr = s.accept()
     print('connected to: '+ addr[0]+':'+str(addr[1]))
 
+c1 = Client1()
+c2 = Client2()
+
 def Main():
     clientprompt = input("Which client do you want to use? Please only use 1 or 2.    :")
     print(clientprompt)
@@ -54,7 +54,6 @@ def Main():
         c1.connect(clientid)
     elif clientprompt == "2":
         clientid = 2
-        c2.connect(clientid)
     else:
         print("Wrong client ID. Please try again.")
         Main()
