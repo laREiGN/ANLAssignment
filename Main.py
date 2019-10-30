@@ -37,7 +37,8 @@ class Client1:
         s.send(bytes(json.dumps(reply2serialized), "utf-8"))
 
 class Client2:
-    def listen(self):
+    def listen(self, clientid):
+        self.clientid = clientid
         host = '0.0.0.0'
         port = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -49,8 +50,18 @@ class Client2:
         s.listen(5)
         conn, addr = s.accept()
         print('connected to: '+ addr[0]+':'+str(addr[1]))
-        c1msg = conn.recv(1024).decode("utf-8")
-        print(c1msg)
+        self.c1msg = conn.recv(1024).decode("utf-8")
+        s.close()
+        self.send()
+    def send(self):
+        #self.clientid = clientid
+        #s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #s.connect((ServerIP, Port))
+        self.c1msg["clientid"] = self.clientid
+        self.c1msg["ip"] = socket.gethostbyname(socket.gethostname())
+        print(self.c1msg)
+
+
 
 c1 = Client1()
 c2 = Client2()
@@ -63,7 +74,7 @@ def Main():
         c1.connect(clientid)
     elif clientprompt == "2":
         clientid = 2
-        c2.listen()
+        c2.listen(clientid)
     else:
         print("Wrong client ID. Please try again.")
         Main()
