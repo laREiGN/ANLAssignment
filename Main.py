@@ -37,10 +37,9 @@ class Client1:
 
 class Client2:
     def listen(self):
-        host = "0.0.0.0"
-        port = 5555
+        host = ''
+        port = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
         try:
             s.bind((host, port))
             print(host,",", port)
