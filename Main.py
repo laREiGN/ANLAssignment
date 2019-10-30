@@ -49,7 +49,7 @@ class Client2:
         s.listen(5)
         conn, addr = s.accept()
         print('connected to: '+ addr[0]+':'+str(addr[1]))
-        c1msg = s.recv(1024).decode("utf-8")
+        c1msg = conn.recv(1024).decode("utf-8")
         print(c1msg)
 
 c1 = Client1()
