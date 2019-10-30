@@ -30,8 +30,9 @@ class Client1:
             reply2serialized = json.loads(reply2)
             print(reply2serialized)
         s.close()
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         c2host = input("Enter the IP of client 2:   ")
-        c2port = input("Enther the port of clinet 2:   ")
+        c2port = int(input("Enther the port of clinet 2:   "))
         s.connect((c2host,c2port))
 
 class Client2:
