@@ -37,12 +37,12 @@ class Client1:
 
 class Client2:
     def listen(self):
-        host = ''
+        host = '0.0.0.0'
         port = 5000
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.bind((host, port))
-            print(host,",", port)
+            print(socket.gethostname,",", port)
         except socket.error as e:
             print(str(e))
         s.listen(5)
