@@ -29,6 +29,10 @@ class Client1:
             reply2 = s.recv(1024)
             reply2serialized = json.loads(reply2)
             print(reply2serialized)
+        s.close()
+        c2host = input("Enter the IP of client 2:   ")
+        c2port = input("Enther the port of clinet 2:   ")
+        s.connect((c2host,c2port))
 
 class Client2:
     def listen(self):
@@ -50,8 +54,7 @@ c2 = Client2()
 
 
 def Main():
-    clientprompt = input("Which client do you want to use? Please only use 1 or 2.    :")
-    print(clientprompt)
+    clientprompt = input("Which client do you want to use? Please only use 1 or 2.    :   ")
     if clientprompt == "1":
         clientid = 1
         c1.connect(clientid)
