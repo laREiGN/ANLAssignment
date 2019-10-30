@@ -34,6 +34,7 @@ class Client1:
         c2host = input("Enter the IP of client 2:   ")
         c2port = int(input("Enther the port of clinet 2:   "))
         s.connect((c2host,c2port))
+        s.send(bytes(reply2, "utf-8"))
 
 class Client2:
     def listen(self):
@@ -42,12 +43,14 @@ class Client2:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.bind((host, port))
-            print(socket.gethostname,",", port)
+            print(socket.gethostname(),",", port)
         except socket.error as e:
             print(str(e))
         s.listen(5)
         conn, addr = s.accept()
         print('connected to: '+ addr[0]+':'+str(addr[1]))
+        c1msg = s.recv(1024).decode("utf-8")
+        print(c1msg)
 
 c1 = Client1()
 c2 = Client2()
