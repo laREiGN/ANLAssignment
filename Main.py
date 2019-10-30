@@ -34,7 +34,7 @@ class Client1:
         c2host = input("Enter the IP of client 2:   ")
         c2port = int(input("Enther the port of clinet 2:   "))
         s.connect((c2host,c2port))
-        s.send(bytes(reply2, "utf-8"))
+        s.send(bytes(json.dumps(reply2serialized), "utf-8"))
 
 class Client2:
     def listen(self):
@@ -49,7 +49,7 @@ class Client2:
         s.listen(5)
         conn, addr = s.accept()
         print('connected to: '+ addr[0]+':'+str(addr[1]))
-        c1msg = s.recv(1024).decode("utf-8")
+        c1msg = conn.recv(1024).decode("utf-8")
         print(c1msg)
 
 c1 = Client1()
