@@ -37,7 +37,7 @@ class Client1:
 
 class Client2:
     def listen(self):
-        host = socket.gethostbyname(socket.gethostname())
+        host = "0.0.0.0"
         port = 5555
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
