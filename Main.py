@@ -54,6 +54,7 @@ class Client1:
         c2port = 5000
         s.connect((c2host,c2port))
         s.send(bytes(json.dumps(c1reply), "utf-8"))
+        print("Client 1 shutting off")
 
 #Client 2 first opens as a server. The client listens for connections. When a connection is made, the client waits for a message.
 #When the message is received, the client shuts down the server (listener) and connects to the school server.
@@ -100,6 +101,7 @@ class Client2:
             c2replyserialized = json.loads(c2reply)
             print("Current status: " + c2replyserialized['status'])
         else: print("No message received from server.")
+        print("Client 2 shutting off")
         
 
 
