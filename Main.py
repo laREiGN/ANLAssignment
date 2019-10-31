@@ -45,7 +45,7 @@ class Client1:
             #STEP 4: Updated client info message received from server.
             c1replyserialized = s.recv(1024)
             c1reply = json.loads(c1replyserialized)
-            print(c1reply["status"])
+            print("Current status: " + c1reply["status"])
         else: print("No message received from server.")
         s.close()
         #STEP 5.1: Message sent from Client 1 to Client 2
@@ -98,7 +98,7 @@ class Client2:
             #STEP 9: Final message received from server. Only the status gets printed.
             c2reply = s.recv(1024)
             c2replyserialized = json.loads(c2reply)
-            print(c2replyserialized['status'])
+            print("Current status: " + c2replyserialized['status'])
         else: print("No message received from server.")
         
 
