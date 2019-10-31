@@ -49,11 +49,13 @@ class Client1:
         else: print("No message received from server.")
         s.close()
         #STEP 5.1: Message sent from Client 1 to Client 2
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        c2host = input("Enter the host name of client 2: ")
-        c2port = 5000
-        s.connect((c2host,c2port))
-        s.send(bytes(json.dumps(c1reply), "utf-8"))
+        if "waiting for message 2" in c1reply["status"]:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            c2host = input("Enter the host name of client 2: ")
+            c2port = 5000
+            s.connect((c2host,c2port))
+            s.send(bytes(json.dumps(c1reply), "utf-8"))
+        else: print("Incorrect message received")
         print("Client 1 shutting off")
 
 #Client 2 first opens as a server. The client listens for connections. When a connection is made, the client waits for a message.
