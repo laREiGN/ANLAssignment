@@ -21,13 +21,17 @@ class Client1:
     def __init__(self):
         self.clientid = None
     def connect(self, clientid):
+        #STEP 1: Connection to server
         self.clientid = clientid
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((ServerIP, Port))
+        #STEP 2: Welcome message from server
         welcome_msg_raw = s.recv(1024)
         welcome_msg = welcome_msg_raw.decode("utf-8")
         print(welcome_msg)
+        #Quick check on the welcome message received
         if "connection" in welcome_msg:
+            #Client info message preparation
             c1message = {}
             c1message["studentnr"] = input("Please enter your student number: ")
             c1message["classname"] = "INF2C"
@@ -36,13 +40,16 @@ class Client1:
             c1message["ip"] = socket.gethostbyname(socket.gethostname())
             c1message["secret"] = None
             c1message["status"] = None
+            #STEP 3: Client info message sent to server
             c1message_serialized = json.dumps(c1message)
             s.send(bytes(c1message_serialized, "utf-8"))
+            #STEP 4: Updated client info message received from server.
             c1replyserialized = s.recv(1024)
             c1reply = json.loads(c1replyserialized)
             print(c1reply["status"])
         else: print("No message received from server.")
         s.close()
+        #STEP 5.1: Message sent from Client 1 to Client 2
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         c2host = input("Enter the host name of client 2: ")
         c2port = 5000
@@ -67,22 +74,29 @@ class Client2:
         s.listen(5)
         conn, addr = s.accept()
         print('connected to: '+ addr[0]+':'+str(addr[1]))
+        #STEP 5.2: Message received by Client 2
         self.c1toc2_message = conn.recv(1024).decode("utf-8")
         s.close()
         self.send()
     def send(self):
+        #STEP 6: Connection made betweed Client 2 and Server
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((ServerIP, Port))
+        #Client info message gets updated with Client 2 info.
         c1toc2_message_json = json.loads(self.c1toc2_message)
         c1toc2_message_json["studentnr"] = input("Please enter your student number: ")
         c1toc2_message_json["clientid"] = self.clientid
         c1toc2_message_json["ip"] = socket.gethostbyname(socket.gethostname())
+        #STEP 7: Welcome message from server
         welcome_msg_raw = s.recv(1024)
         welcome_msg = welcome_msg_raw.decode("utf-8")
         print(welcome_msg)
+        #Quick check on the welcome message received
         if "connection" in welcome_msg:
+            #STEP 8: Updated Client info message (with secret and status) sent to server
             c2message = json.dumps(c1toc2_message_json)
             s.send(bytes(c2message, "utf-8"))
+            #STEP 9: Final message received from server. Only the status gets printed.
             c2reply = s.recv(1024)
             c2replyserialized = json.loads(c2reply)
             print(c2replyserialized['status'])
