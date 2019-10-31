@@ -5,10 +5,6 @@ import json
 ServerIP = "145.24.222.103"
 Port = 8001
 
-#Client 1 is the Client that contacts the server first. Client 1 listens for a welcome message. 
-#If the message is received, client 1 sends a json file to the server containing needed info.
-#The Server then responds with an updated json file, which then gets sent to Client 2
-
 #Welcome message from server = welcome_msg
 #Client 1 info message = c1message
 #Client 1 reply message (sent by server) = c1reply
@@ -17,6 +13,9 @@ Port = 8001
 #Client 2 updated info message = c2message
 #Client 2 reply message (sent by server) = c2reply
 
+#Client 1 is the Client that contacts the server first. Client 1 listens for a welcome message. 
+#If the message is received, client 1 sends a json file to the server containing needed info.
+#The Server then responds with an updated json file, which then gets sent to Client 2
 class Client1:
     def __init__(self):
         self.clientid = None
