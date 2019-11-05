@@ -69,7 +69,7 @@ class Client2:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.bind((host, port))
-            print("Host name:", socket.gethostname())
+            print("Host name:", socket.gethostbyname(socket.gethostname()))
             print("Use this when asked for a name by client 1.")
         except socket.error as e:
             print(str(e))
