@@ -52,7 +52,7 @@ class Client1:
         if "waiting for message 2" in c1reply["status"]:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             c2host = input("Enter the host name of client 2: ")
-            c2port = 5000
+            c2port = 8001
             s.connect((c2host,c2port))
             s.send(bytes(json.dumps(c1reply), "utf-8"))
         else: print("Incorrect message received")
@@ -65,7 +65,7 @@ class Client2:
     def listen(self, clientid):
         self.clientid = clientid
         host = '0.0.0.0'
-        port = 5000
+        port = 8001
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.bind((host, port))
