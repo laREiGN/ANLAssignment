@@ -3,7 +3,7 @@ import sys
 import json
 
 ServerIP = "145.24.222.103"
-Port = 8001
+Port = 8200
 
 #Welcome message from server = welcome_msg
 #Client 1 info message = c1message
