@@ -23,10 +23,14 @@ class Client1:
         #STEP 1: Connection to server
         self.clientid = clientid
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #AF_INET = ipv4 (internet protocol version, ip adress versie 4) 
+        #SOCK_STREAM = connection via TCP Protocol
         s.connect((ServerIP, Port))
         #STEP 2: Welcome message from server
         welcome_msg_raw = s.recv(1024)
+        #ontvangen in 1024 bytes
         welcome_msg = welcome_msg_raw.decode("utf-8")
+        #vertalen naar utf-8 string (standaard formaat voor codering)
         print(welcome_msg)
         #Quick check on the welcome message received
         if "connection" in welcome_msg:
@@ -41,11 +45,15 @@ class Client1:
             c1message["status"] = None
             #STEP 3: Client info message sent to server
             c1message_serialized = json.dumps(c1message)
+            #make a json from the object
             s.send(bytes(c1message_serialized, "utf-8"))
+            #reduce back to bytes
             #STEP 4: Updated client info message received from server.
             c1replyserialized = s.recv(1024)
             c1reply = json.loads(c1replyserialized)
+            #receive a json back from the server
             print("Current status: " + c1reply["status"])
+            #print hidden status
         else: print("No message received from server.")
         s.close()
         #STEP 5.1: Message sent from Client 1 to Client 2
@@ -69,23 +77,29 @@ class Client2:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.bind((host, port))
+            #verbinding maken tussen host ip en port nr
             print("Host name:", socket.gethostbyname(socket.gethostname()))
             print("Use this when asked for a name by client 1.")
         except socket.error as e:
             print(str(e))
         s.listen(5)
+        #luisterd naar conecties met als max 5 parralel
         conn, addr = s.accept()
         print('connected to: '+ addr[0]+':'+str(addr[1]))
         #STEP 5.2: Message received by Client 2
         self.c1toc2_message = conn.recv(1024).decode("utf-8")
+        #recieve and decode json
         s.close()
         self.send()
+        #ontvangen en decoden
     def send(self):
         #STEP 6: Connection made betweed Client 2 and Server
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((ServerIP, Port))
+        #client opzetten
         #Client info message gets updated with Client 2 info.
         c1toc2_message_json = json.loads(self.c1toc2_message)
+        #make json object
         c1toc2_message_json["studentnr"] = input("Please enter your student number: ")
         c1toc2_message_json["clientid"] = self.clientid
         c1toc2_message_json["ip"] = socket.gethostbyname(socket.gethostname())
